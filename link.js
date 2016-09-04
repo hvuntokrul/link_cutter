@@ -5,19 +5,21 @@ module.exports = function createNewLink(URL, collection, DB, RES) {
   collection
     .find({ short: newLink })
     .count()
+    //check if this short link is already in the db
     .then(function(value) {
+      //if already there and something was found
       if (value !== 0) {
-        console.log('already there');
+        //run function again recursively
         createNewLink(URL, collection, DB, RES);
       } 
+      //if not - make new DB entry, send response to client and close DB
       else {
         var entry = {
           'original' : URL,
           'short' : newLink
         };
-        console.log('inserted new entry ' + newLink);
         collection.insert(entry);
-        RES.json({'original' : entry.original, 'short' : 'https://backend-hvuntokrul.c9users.io/' + entry.short});
+        RES.json({'original' : entry.original, 'short' : 'https://fcc-link.herokuapp.com/' + entry.short});
         DB.close();
       }
   });

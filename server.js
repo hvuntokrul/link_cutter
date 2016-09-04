@@ -3,7 +3,10 @@ var app = express();
 var port = process.env.PORT || 8080; //for Heroku
 var valid = require('validator');
 var mClient = require('mongodb').MongoClient;
+//import function for creating new short links and adding to DB
 var createNewLink = require('./link');
+//make DB access link safe
+var dbUrl = process.env.MONGOLAB_URI;
 
 //answer to homepage requests
 app.use('/', express.static(__dirname + '/public'));
@@ -19,8 +22,6 @@ app.param('url', function (req, res, next, url){
     res.json({'error' : 'wrong ulr format, please retry'});
     return;
   } 
-  
-  var dbUrl = process.env.MONGOLAB_URI;
 
   mClient.connect(dbUrl, function (err, db){
     if (err) throw err;
@@ -32,6 +33,31 @@ app.param('url', function (req, res, next, url){
 });
 
 app.get('/api/:url(*)', function(req, res){
+});
+
+app.param('sLink', function(req, res, next, sLink){
+  
+  mClient.connect(dbUrl, function (err, db){
+    if (err) throw err;
+    //try to find short link in the DB
+    db.collection('links')
+    .findOne({short : sLink})
+    .then(function(data){
+      //if found
+      if (data !== null)
+        res.redirect(data.original);
+      //if not found
+      else
+        res.json({'error' : 'short link not found, please retry'});
+      
+      db.close();
+    });
+  });
+  next();
+});
+
+//respond to get requests with short links
+app.get('/:sLink', function(req, res){
 });
 
 //start server
