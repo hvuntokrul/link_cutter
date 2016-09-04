@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/hvuntokrul/link_cutter#readme",
   "dependencies": {
+    "express": "^4.14.0",
     "mongodb": "^2.2.9",
     "validator": "^5.6.0"
   }
