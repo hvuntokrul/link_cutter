@@ -21,4 +21,4 @@ module.exports = function createNewLink(URL, collection, DB, RES) {
         DB.close();
       }
   });
-}
+};
