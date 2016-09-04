@@ -1,0 +1,22 @@
+{
+  "name": "shurl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hvuntokrul/link_cutter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hvuntokrul/link_cutter/issues"
+  },
+  "homepage": "https://github.com/hvuntokrul/link_cutter#readme",
+  "dependencies": {
+    "mongodb": "^2.2.9"
+  }
+}
